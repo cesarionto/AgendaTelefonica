@@ -1,0 +1,5 @@
+br\com\cesario\agendatelefonica\modelos\Contatos.class
+br\com\cesario\agendatelefonica\interfacegrafica\TelaPrincipal$1.class
+br\com\cesario\agendatelefonica\conexaosql\ConnectionFactory.class
+br\com\cesario\agendatelefonica\conexaosql\ContatosDAO.class
+br\com\cesario\agendatelefonica\interfacegrafica\TelaPrincipal.class
