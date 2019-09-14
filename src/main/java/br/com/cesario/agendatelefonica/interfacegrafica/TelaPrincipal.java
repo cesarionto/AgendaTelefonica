@@ -5,6 +5,13 @@
  */
 package br.com.cesario.agendatelefonica.interfacegrafica;
 
+import br.com.cesario.agendatelefonica.conexaosql.ContatosDAO;
+import br.com.cesario.agendatelefonica.controladores.ControladorTelaPrincipal;
+import br.com.cesario.agendatelefonica.modelos.Contatos;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
+
 /**
  *
  * @author cesar
@@ -12,10 +19,86 @@ package br.com.cesario.agendatelefonica.interfacegrafica;
 public class TelaPrincipal extends javax.swing.JFrame {
 
     /**
+     * @return the id
+     */
+    public javax.swing.JTextField getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(javax.swing.JTextField id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the nome
+     */
+    public javax.swing.JTextField getNome() {
+        return nome;
+    }
+
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(javax.swing.JTextField nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * @return the nomepesquisa
+     */
+    public javax.swing.JTextField getNomepesquisa() {
+        return nomepesquisa;
+    }
+
+    /**
+     * @param nomepesquisa the nomepesquisa to set
+     */
+    public void setNomepesquisa(javax.swing.JTextField nomepesquisa) {
+        this.nomepesquisa = nomepesquisa;
+    }
+
+    /**
+     * @return the numerotelefone
+     */
+    public javax.swing.JFormattedTextField getNumerotelefone() {
+        return numerotelefone;
+    }
+
+    /**
+     * @param numerotelefone the numerotelefone to set
+     */
+    public void setNumerotelefone(javax.swing.JFormattedTextField numerotelefone) {
+        this.numerotelefone = numerotelefone;
+    }
+
+    /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
         initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) jTableContatos.getModel();
+        jTableContatos.setRowSorter(new TableRowSorter(modelo));
+
+        listar();
+    }
+
+    public void listar() {
+        DefaultTableModel modelo;
+        modelo = (DefaultTableModel) jTableContatos.getModel();
+        modelo.setNumRows(0);
+
+        ContatosDAO dao = new ContatosDAO();
+        for (Contatos contatos : dao.listar()) {
+            modelo.addRow(new Object[]{
+                contatos.getId(),
+                contatos.getNome(),
+                contatos.getNumero_telefone()
+
+            });
+        }
     }
 
     /**
@@ -44,7 +127,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableContatos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Agenda Telefonica");
@@ -79,6 +162,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Book Antiqua", 0, 18)); // NOI18N
         jButton1.setText("Adicionar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Book Antiqua", 0, 18)); // NOI18N
         jButton2.setText("Alterar");
@@ -181,8 +269,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lista de Contatos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Book Antiqua", 0, 18))); // NOI18N
 
-        jTable1.setFont(new java.awt.Font("Book Antiqua", 0, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableContatos.setFont(new java.awt.Font("Book Antiqua", 0, 18)); // NOI18N
+        jTableContatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -190,7 +278,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 "ID", "Nome Completo", "Numero Telefone"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableContatos);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -209,6 +297,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ControladorTelaPrincipal controlador = new ControladorTelaPrincipal();
+        controlador.adicionaContato(this);
+        listar();// TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,9 +354,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableContatos;
     private javax.swing.JTextField nome;
     private javax.swing.JTextField nomepesquisa;
     private javax.swing.JFormattedTextField numerotelefone;
     // End of variables declaration//GEN-END:variables
+
 }
