@@ -19,11 +19,14 @@ import javax.swing.JOptionPane;
  * @author cesar
  */
 public class ContatosDAO {
+
     public Connection connection;
-    public ContatosDAO(){
+
+    public ContatosDAO() {
         this.connection = new ConnectionFactory().getConnection();
     }
-    public void adiciona(Contatos contato){
+
+    public void adiciona(Contatos contato) {
         String sql = "insert into contatos "
                 + "( nome, numero_telefone) values (?,?)";
         try {
@@ -38,9 +41,10 @@ public class ContatosDAO {
                     + " banco de dados e tente novamente!");//ESSA MERDA NÂO APARECEEEEE!
             throw new RuntimeException(e);
         }
-        
+
     }
-     public void atualizar(Contatos contato){
+
+    public void atualizar(Contatos contato) {
         String sql = "update contatos set "
                 + "nome = ? , numero_telefone = ? where id = ?";
         try {
@@ -56,18 +60,19 @@ public class ContatosDAO {
                     + " banco de dados e tente novamente!" + e);//ESSA MERDA NÂO APARECEEEEE!
             throw new RuntimeException(e);
         }
-        
+
     }
+
     /**
      *
      * @return
-     */   
-    public List<Contatos> listar(){
-           try {
+     */
+    public List<Contatos> listar() {
+        try {
             List<Contatos> contatos = new ArrayList<>();
             PreparedStatement stmt = this.connection.prepareStatement("SELECT * from contatos ORDER BY nome");
             ResultSet resultset = stmt.executeQuery();
-            while(resultset.next()){
+            while (resultset.next()) {
                 Contatos contato = new Contatos();
                 contato.setId(resultset.getInt("id"));
                 contato.setNome(resultset.getString("nome"));
@@ -79,21 +84,42 @@ public class ContatosDAO {
             return contatos;
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
-        } 
-    } 
-    public void apagar(Contatos contato){
-        
+        }
+    }
+
+    public void apagar(Contatos contato) {
+
         PreparedStatement stmt;
         try {
             stmt = this.connection.prepareStatement("delete from contatos where id = ?");
             stmt.setLong(1, contato.getId());
-            System.out.println("Eu Sou o contato: "+ contato.getId());
+            System.out.println("Eu Sou o contato: " + contato.getId());
             stmt.execute();
             stmt.close();
-            JOptionPane.showMessageDialog(null,"Contato Excluido");
+            JOptionPane.showMessageDialog(null, "Contato Excluido");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Ocorreu um erro: " + ex);
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro: " + ex);
         }
-       
+
+    }
+
+    public List<Contatos> listarBusca(String nome) {
+        try {
+            List<Contatos> contatos = new ArrayList<>();
+            PreparedStatement stmt = this.connection.prepareStatement("SELECT * from contatos ORDER BY nome");
+            ResultSet resultset = stmt.executeQuery();
+            while (resultset.next()) {
+                Contatos contato = new Contatos();
+                contato.setId(resultset.getInt("id"));
+                contato.setNome(resultset.getString("nome"));
+                contato.setNumero_telefone(resultset.getString("numero_telefone"));
+                contatos.add(contato);
+            }
+            resultset.close();
+            stmt.close();
+            return contatos;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

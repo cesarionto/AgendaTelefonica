@@ -14,15 +14,36 @@ import br.com.cesario.agendatelefonica.modelos.Contatos;
  * @author cesar
  */
 public class ControladorTelaPrincipal {
+
     private Contatos contato = new Contatos();
     private ContatosDAO dao = new ContatosDAO();
-    
-    public void adicionaContato(TelaPrincipal tela){
+
+    public void adicionaContato(TelaPrincipal tela) {
 //        contato.setId(Integer.parseInt(tela.getId().getText()));
         contato.setNome(tela.getNome().getText());
         contato.setNumero_telefone(tela.getNumerotelefone().getText());
-        
+
         dao.adiciona(contato);
     }
-    
+
+    public void alteraContato(TelaPrincipal tela) {
+        contato.setId(Integer.parseInt(tela.getId().getText()));
+        contato.setNome(tela.getNome().getText());
+        contato.setNumero_telefone(tela.getNumerotelefone().getText());
+
+        dao.atualizar(contato);
+    }
+
+    public void excluir(TelaPrincipal tela) {
+        int id;
+        id = Integer.parseInt(tela.getId().getText());
+        contato.setId(id);
+
+        dao.apagar(contato);
+    }
+
+    public void pesquisar(TelaPrincipal tela) {
+        String nome;
+        nome = tela.getNome().getText();
+    }
 }
