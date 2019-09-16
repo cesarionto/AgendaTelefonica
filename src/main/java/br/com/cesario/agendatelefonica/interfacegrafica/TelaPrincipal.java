@@ -10,7 +10,6 @@ import br.com.cesario.agendatelefonica.controladores.ControladorTelaPrincipal;
 import br.com.cesario.agendatelefonica.modelos.Contatos;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
 
 /**
  *
@@ -18,18 +17,19 @@ import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
 
+    private final ControladorTelaPrincipal controlador = new ControladorTelaPrincipal();
+
+    public void limpaCampos() {
+        id.setText("");
+        nome.setText("");
+        numerotelefone.setText("");
+    }
+
     /**
      * @return the id
      */
     public javax.swing.JTextField getId() {
         return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(javax.swing.JTextField id) {
-        this.id = id;
     }
 
     /**
@@ -40,38 +40,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     /**
-     * @param nome the nome to set
-     */
-    public void setNome(javax.swing.JTextField nome) {
-        this.nome = nome;
-    }
-
-    /**
      * @return the nomepesquisa
      */
-    public javax.swing.JTextField getNomepesquisa() {
-        return nomepesquisa;
-    }
-
-    /**
-     * @param nomepesquisa the nomepesquisa to set
-     */
-    public void setNomepesquisa(javax.swing.JTextField nomepesquisa) {
-        this.nomepesquisa = nomepesquisa;
-    }
-
     /**
      * @return the numerotelefone
      */
     public javax.swing.JFormattedTextField getNumerotelefone() {
         return numerotelefone;
-    }
-
-    /**
-     * @param numerotelefone the numerotelefone to set
-     */
-    public void setNumerotelefone(javax.swing.JFormattedTextField numerotelefone) {
-        this.numerotelefone = numerotelefone;
     }
 
     /**
@@ -81,7 +56,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         DefaultTableModel modelo = (DefaultTableModel) jTableContatos.getModel();
         jTableContatos.setRowSorter(new TableRowSorter(modelo));
-
         listar();
     }
 
@@ -96,7 +70,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 contatos.getId(),
                 contatos.getNome(),
                 contatos.getNumero_telefone()
-
             });
         }
     }
@@ -121,10 +94,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        nomepesquisa = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableContatos = new javax.swing.JTable();
@@ -170,9 +139,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Book Antiqua", 0, 18)); // NOI18N
         jButton2.setText("Alterar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Book Antiqua", 0, 18)); // NOI18N
         jButton3.setText("Excluir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -225,48 +204,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 490, 150));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pesquisar Contatos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Book Antiqua", 0, 18))); // NOI18N
-
-        jLabel5.setFont(new java.awt.Font("Book Antiqua", 0, 18)); // NOI18N
-        jLabel5.setText("Nome:");
-
-        nomepesquisa.setFont(new java.awt.Font("Book Antiqua", 0, 18)); // NOI18N
-
-        jButton4.setFont(new java.awt.Font("Book Antiqua", 0, 18)); // NOI18N
-        jButton4.setText("Pesquisar");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nomepesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                .addGap(138, 138, 138))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(342, 342, 342)
-                    .addComponent(jButton4)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(nomepesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jButton4)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 490, 80));
-
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lista de Contatos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Book Antiqua", 0, 18))); // NOI18N
 
         jTableContatos.setFont(new java.awt.Font("Book Antiqua", 0, 18)); // NOI18N
@@ -278,6 +215,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 "ID", "Nome Completo", "Numero Telefone"
             }
         ));
+        jTableContatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableContatosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableContatos);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -293,16 +235,37 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 490, -1));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 490, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ControladorTelaPrincipal controlador = new ControladorTelaPrincipal();
         controlador.adicionaContato(this);
-        listar();// TODO add your handling code here:
+        listar();
+        limpaCampos();
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        controlador.excluir(this);
+        listar();
+        limpaCampos();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTableContatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableContatosMouseClicked
+        if (jTableContatos.getSelectedRow() != -1) {
+            id.setText(jTableContatos.getValueAt(jTableContatos.getSelectedRow(), 0).toString());
+            nome.setText(jTableContatos.getValueAt(jTableContatos.getSelectedRow(), 1).toString());
+            numerotelefone.setText(jTableContatos.getValueAt(jTableContatos.getSelectedRow(), 2).toString());
+        }
+    }//GEN-LAST:event_jTableContatosMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        controlador.alteraContato(this);
+        listar();
+        limpaCampos();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -344,19 +307,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableContatos;
     private javax.swing.JTextField nome;
-    private javax.swing.JTextField nomepesquisa;
     private javax.swing.JFormattedTextField numerotelefone;
     // End of variables declaration//GEN-END:variables
 

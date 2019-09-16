@@ -15,14 +15,12 @@ import br.com.cesario.agendatelefonica.modelos.Contatos;
  */
 public class ControladorTelaPrincipal {
 
-    private Contatos contato = new Contatos();
-    private ContatosDAO dao = new ContatosDAO();
+    private final Contatos contato = new Contatos();
+    private final ContatosDAO dao = new ContatosDAO();
 
     public void adicionaContato(TelaPrincipal tela) {
-//        contato.setId(Integer.parseInt(tela.getId().getText()));
         contato.setNome(tela.getNome().getText());
         contato.setNumero_telefone(tela.getNumerotelefone().getText());
-
         dao.adiciona(contato);
     }
 
@@ -30,7 +28,6 @@ public class ControladorTelaPrincipal {
         contato.setId(Integer.parseInt(tela.getId().getText()));
         contato.setNome(tela.getNome().getText());
         contato.setNumero_telefone(tela.getNumerotelefone().getText());
-
         dao.atualizar(contato);
     }
 
@@ -38,12 +35,7 @@ public class ControladorTelaPrincipal {
         int id;
         id = Integer.parseInt(tela.getId().getText());
         contato.setId(id);
-
         dao.apagar(contato);
     }
-
-    public void pesquisar(TelaPrincipal tela) {
-        String nome;
-        nome = tela.getNome().getText();
-    }
+    
 }
